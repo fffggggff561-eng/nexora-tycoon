@@ -12,7 +12,9 @@ const incomeEl = document.getElementById("income");
 
 const button = document.getElementById("launchButton");
 const floating = document.getElementById("floatingContainer");
-
+const shopModal = document.getElementById("shopModal");
+const shopButton = document.getElementById("shopButton");
+const closeShop = document.getElementById("closeShop");
 function needXP(){
     return level*100;
 }
