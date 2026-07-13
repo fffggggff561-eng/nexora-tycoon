@@ -64,6 +64,7 @@ shopButton.addEventListener("click", () => {
 });
 
 closeShop.addEventListener("click", () => {
+    alert("Close працює");
     shopModal.classList.add("hidden");
 });
 
