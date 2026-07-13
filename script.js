@@ -105,3 +105,10 @@ setInterval(()=>{
 },1000);
 
 update();
+shopButton.addEventListener("click", () => {
+    shopModal.classList.remove("hidden");
+});
+
+closeShop.addEventListener("click", () => {
+    shopModal.classList.add("hidden");
+});
