@@ -1,1 +1,25 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexora Tycoon</title>
+</head>
+<body>
 
+    <h1>Nexora Tycoon</h1>
+    <p>Баланс: <span id="balance">$0</span></p>
+    <p>Рівень: <span id="level">LVL 1</span></p>
+
+    <button onclick="launchOffer()">🚀 Launch Offer</button>
+    <button onclick="toggleShop(true)">🛒 Магазин</button>
+
+    <div id="shop-modal" style="display: none; border: 1px solid black; padding: 20px; margin-top: 10px;">
+        <h2>Магазин</h2>
+        <button onclick="buyUpgrade('laptop')">Laptop ($100)</button>
+        <button onclick="buyUpgrade('assistant')">Assistant ($500)</button>
+        <button onclick="toggleShop(false)">Закрити</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
