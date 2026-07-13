@@ -1,45 +1,105 @@
-let money = 0;
-let level = 1;
+let money = Number(localStorage.getItem("money")) || 0;
+let xp = Number(localStorage.getItem("xp")) || 0;
+let level = Number(localStorage.getItem("level")) || 1;
 
-const moneyText = document.querySelector(".money");
-const levelText = document.querySelector("h2");
-const workButton = document.getElementById("work");
+let income = Number(localStorage.getItem("income")) || 1;
 
-const levels = [
-    "Junior Affiliate",
-    "Affiliate",
-    "Senior Affiliate",
-    "Team Lead",
-    "Head of Affiliate",
-    "NEXORA Legend"
-];
+const moneyEl = document.getElementById("money");
+const xpEl = document.getElementById("xpText");
+const levelEl = document.getElementById("level");
+const xpFill = document.getElementById("xpFill");
+const incomeEl = document.getElementById("income");
 
-function update() {
-    moneyText.innerText = "💵 $" + money;
+const button = document.getElementById("launchButton");
+const floating = document.getElementById("floatingContainer");
 
-    if (money >= 1000 && level < 6) {
-        level++;
-        levelText.innerText = levels[level - 1];
-    }
-
-    localStorage.setItem("money", money);
-    localStorage.setItem("level", level);
+function needXP(){
+    return level*100;
 }
 
-const savedMoney = localStorage.getItem("money");
-const savedLevel = localStorage.getItem("level");
+function save(){
 
-if (savedMoney) money = Number(savedMoney);
-if (savedLevel) level = Number(savedLevel);
+    localStorage.setItem("money",money);
+    localStorage.setItem("xp",xp);
+    localStorage.setItem("level",level);
+    localStorage.setItem("income",income);
 
-levelText.innerText = levels[level - 1];
+}
 
-update();
+function update(){
 
-workButton.addEventListener("click", () => {
+    moneyEl.innerText=Math.floor(money).toLocaleString();
 
-    money += 10;
+    incomeEl.innerText=income;
+
+    levelEl.innerText="LVL "+level;
+
+    xpEl.innerText=xp+" / "+needXP()+" XP";
+
+    xpFill.style.width=(xp/needXP())*100+"%";
+
+    save();
+
+}
+
+function levelUp(){
+
+    while(xp>=needXP()){
+
+        xp-=needXP();
+
+        level++;
+
+        income++;
+
+        showFloat("⭐ LEVEL UP!");
+
+    }
+
+}
+
+function showFloat(text){
+
+    const div=document.createElement("div");
+
+    div.className="floatMoney";
+
+    div.innerText=text;
+
+    div.style.left=(40+Math.random()*20)+"%";
+
+    floating.appendChild(div);
+
+    setTimeout(()=>{
+
+        div.remove();
+
+    },1100);
+
+}
+
+button.onclick=()=>{
+
+    const earn=income+Math.floor(Math.random()*4);
+
+    money+=earn;
+
+    xp+=10;
+
+    showFloat("+$"+earn);
+
+    levelUp();
 
     update();
 
-});
+};
+
+setInterval(()=>{
+
+    money+=income;
+
+    update();
+
+},1000);
+
+update();
