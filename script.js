@@ -37,14 +37,24 @@ function launchOffer() {
 }
 
 function buyUpgrade(type) {
-    if (type === 'laptop' && gameState.balance >= 100) {
-        gameState.balance -= 100;
-        gameState.multiplier += 0.2;
-    } else if (type === 'assistant' && gameState.balance >= 500) {
-        gameState.balance -= 500;
-        gameState.incomePerSecond += 5;
-    } else {
-        alert("Недостатньо коштів!");
+    if (type === 'laptop') {
+        const cost = 100;
+        if (gameState.balance >= cost) {
+            gameState.balance -= cost;
+            gameState.multiplier += 0.2;
+            alert("Апгрейд куплено!");
+        } else {
+            alert("Недостатньо коштів! Потрібно $100");
+        }
+    } else if (type === 'assistant') {
+        const cost = 500;
+        if (gameState.balance >= cost) {
+            gameState.balance -= cost;
+            gameState.incomePerSecond += 5;
+            alert("Асистент найнятий!");
+        } else {
+            alert("Недостатньо коштів! Потрібно $500");
+        }
     }
     updateUI();
 }
