@@ -1,71 +1,67 @@
-let money = Number(localStorage.getItem("money")) || 0;
-let xp = Number(localStorage.getItem("xp")) || 0;
-let level = Number(localStorage.getItem("level")) || 1;
-let income = Number(localStorage.getItem("income")) || 1;
+// --- NEXORA TYCOON CORE SCRIPT ---
 
-const moneyEl = document.getElementById("money");
-const xpEl = document.getElementById("xpText");
-const levelEl = document.getElementById("level");
-const xpFill = document.getElementById("xpFill");
-const incomeEl = document.getElementById("income");
+// 1. СТАН ГРИ
+let gameState = {
+    balance: 0,
+    xp: 0,
+    level: 1,
+    incomePerSecond: 0,
+    multiplier: 1
+};
 
-const launchButton = document.getElementById("launchButton");
-const floatingContainer = document.getElementById("floatingContainer");
-
-const shopButton = document.getElementById("shopButton");
-const shopModal = document.getElementById("shopModal");
-const closeShop = document.getElementById("closeShop");
-
-function requiredXP() {
-    return level * 100;
+// 2. ІНІЦІАЛІЗАЦІЯ ТА ЗБЕРЕЖЕННЯ
+function loadGame() {
+    const saved = localStorage.getItem('nexoraSave');
+    if (saved) gameState = JSON.parse(saved);
 }
 
 function saveGame() {
-    localStorage.setItem("money", money);
-    localStorage.setItem("xp", xp);
-    localStorage.setItem("level", level);
-    localStorage.setItem("income", income);
+    localStorage.setItem('nexoraSave', JSON.stringify(gameState));
 }
 
+// 3. ІГРОВА ЛОГІКА
 function updateUI() {
-    moneyEl.textContent = Math.floor(money);
-    xpEl.textContent = ${xp} / ${requiredXP()} XP;
-    levelEl.textContent = LVL ${level};
-    incomeEl.textContent = income;
-    xpFill.style.width = (xp / requiredXP()) * 100 + "%";
+    document.getElementById('balance').innerText = $${Math.floor(gameState.balance)};
+    document.getElementById('level').innerText = LVL ${gameState.level};
     saveGame();
 }
 
-function levelUp() {
-    while (xp >= requiredXP()) {
-        xp -= requiredXP();
-        level++;
-        income++;
+function launchOffer() {
+    gameState.balance += (10 * gameState.multiplier);
+    gameState.xp += 10;
+    if (gameState.xp >= gameState.level * 100) {
+        gameState.level++;
+        alert("Level Up! Поточний рівень: " + gameState.level);
     }
+    updateUI();
 }
 
-launchButton.addEventListener("click", () => {
-    const earned = income + Math.floor(Math.random() * 4);
-
-    money += earned;
-    xp += 10;
-
-    levelUp();
+function buyUpgrade(type) {
+    if (type === 'laptop' && gameState.balance >= 100) {
+        gameState.balance -= 100;
+        gameState.multiplier += 0.2;
+    } else if (type === 'assistant' && gameState.balance >= 500) {
+        gameState.balance -= 500;
+        gameState.incomePerSecond += 5;
+    } else {
+        alert("Недостатньо коштів!");
+    }
     updateUI();
-});
+}
 
+function toggleShop(open) {
+    document.getElementById('shop-modal').style.display = open ? 'block' : 'none';
+}
+
+// 4. ЦИКЛИ ТА ЗАПУСК
 setInterval(() => {
-    money += income;
-    updateUI();
+    if (gameState.incomePerSecond > 0) {
+        gameState.balance += gameState.incomePerSecond;
+        updateUI();
+    }
 }, 1000);
 
-shopButton.addEventListener("click", () => {
-    shopModal.classList.remove("hidden");
-});
-
-closeShop.addEventListener("click", () => {
-    alert("Close працює");
-    shopModal.classList.add("hidden");
-});
-
-updateUI();
+window.onload = () => {
+    loadGame();
+    updateUI();
+};
