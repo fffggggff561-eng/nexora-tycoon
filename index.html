@@ -1,41 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXORA Tycoon</title>
 
-    <link rel="stylesheet" href="style.css">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXORA Tycoon</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<div class="container">
+<div id="particles"></div>
 
-    <h1>💎 NEXORA Tycoon</h1>
+<div class="backgroundGlow"></div>
 
-    <h2>Junior Affiliate</h2>
+<div class="app">
 
-    <div class="money">
+<header>
 
-        💵 $0
+<div class="logo">
+💎 NEXORA
+</div>
 
-    </div>
+<div class="levelBox">
 
-    <button id="work">
+<div class="levelTop">
 
-        🚀 Launch Offer
+<span id="level">
+LVL 1
+</span>
 
-    </button>
+<span id="xpText">
+0 / 100 XP
+</span>
 
-    <p>
+</div>
 
-        Become the biggest Affiliate Empire.
+<div class="xpBar">
 
-    </p>
+<div id="xpFill"></div>
+
+</div>
+
+</div>
+
+</header>
+
+<section class="moneyCard">
+
+<div class="moneyTitle">
+
+Balance
+
+</div>
+
+<div class="money">
+
+$<span id="money">0</span>
+
+</div>
+
+<div class="income">
+
++$<span id="income">1</span>/sec
+
+</div>
+
+</section>
+
+<section class="launch">
+
+<button id="launchButton">
+
+🚀 Launch Offer
+
+</button>
+
+<div id="floatingContainer"></div>
+
+</section>
+
+<section class="menu">
+
+<button class="menuButton">
+
+🛒 Shop
+
+</button>
+
+<button class="menuButton">
+
+👥 Staff
+
+</button>
+
+<button class="menuButton">
+
+🌍 Countries
+
+</button>
+
+<button class="menuButton">
+
+🏆 Achievements
+
+</button>
+
+<button class="menuButton">
+
+📊 Statistics
+
+</button>
+
+<button class="menuButton">
+
+⚙ Settings
+
+</button>
+
+</section>
+
+<footer>
+
+NEXORA Tycoon Alpha
+
+</footer>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
