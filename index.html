@@ -3,23 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Nexora Tycoon</title>
+    <style>
+        body { background: #1a1a2e; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        button { padding: 15px 25px; font-size: 16px; cursor: pointer; margin: 10px; border-radius: 8px; border: none; }
+        #shop-modal { display: none; position: fixed; top: 20%; left: 30%; width: 40%; background: #16213e; padding: 20px; border: 2px solid #4e4e6a; border-radius: 15px; }
+    </style>
 </head>
 <body>
 
-    <h1>Nexora Tycoon</h1>
-    <p>Баланс: <span id="balance">$0</span></p>
-    <p>Рівень: <span id="level">LVL 1</span></p>
+    <h1>💎 NEXORA TYCOON</h1>
+    <h2 id="balance">$0</h2>
+    <p id="level">LVL 1</p>
 
     <button onclick="launchOffer()">🚀 Launch Offer</button>
-    <button onclick="toggleShop(true)">🛒 Магазин</button>
+    <button onclick="toggleShop(true)">🛒 Shop</button>
 
-    <div id="shop-modal" style="display: none; border: 1px solid black; padding: 20px; margin-top: 10px;">
+    <div id="shop-modal">
         <h2>Магазин</h2>
         <button onclick="buyUpgrade('laptop')">Laptop ($100)</button>
         <button onclick="buyUpgrade('assistant')">Assistant ($500)</button>
         <button onclick="toggleShop(false)">Закрити</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let gameState = { balance: 0, xp: 0, level: 1, incomePerSecond: 0, multiplier: 1 };
+
+        function loadGame() {
+            const saved = localStorage.getItem('nexoraSave');
+            if (saved) gameState = JSON.parse(saved);
+        }
+
+        function saveGame() {
+            localStorage.setItem('nexoraSave', JSON.stringify(gameState));
+        }
+
+        function updateUI() {
+            document.getElementById('balance').innerText = $${Math.floor(gameState.balance)};
+            document.getElementById('level').innerText = LVL ${gameState.level};
+            saveGame();
+        }
+
+        function launchOffer() {
+            gameState.balance += (10 * gameState.multiplier);
+            gameState.xp += 10;
+            if (gameState.xp >= gameState.level * 100) {
+                gameState.level++;
+                alert("Level Up!");
+            }
+            updateUI();
+        }
+
+        function buyUpgrade(type) {
+            if (type === 'laptop' && gameState.balance >= 100) {
+                gameState.balance -= 100;
+                gameState.multiplier += 0.2;
+            } else if (type === 'assistant' && gameState.balance >= 500) {
+                gameState.balance -= 500;
+                gameState.incomePerSecond += 5;
+            } else {
+                alert("Недостатньо коштів!");
+            }
+            updateUI();
+        }
+
+        function toggleShop(open) {
+            document.getElementById('shop-modal').style.display = open ? 'block' : 'none';
+        }
+
+        setInterval(() => {
+            if (gameState.incomePerSecond > 0) {
+                gameState.balance += gameState.incomePerSecond;
+                updateUI();
+            }
+        }, 1000);
+
+        loadGame();
+        updateUI();
+    </script>
 </body>
 </html>
