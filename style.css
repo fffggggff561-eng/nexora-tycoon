@@ -211,3 +211,63 @@ transform:translate(-50%,-130px) scale(1.4);
 }
 
 }
+.hidden{
+    display:none;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.modal-content{
+
+    width:420px;
+    max-width:90%;
+
+    background:#25194f;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:0 0 35px rgba(130,80,255,.45);
+
+    text-align:center;
+
+}
+
+.modal-content h2{
+
+    margin-bottom:20px;
+
+}
+
+#closeShop{
+
+    margin-top:20px;
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    background:linear-gradient(90deg,#6f52ff,#b55cff);
+
+    color:white;
+
+}
